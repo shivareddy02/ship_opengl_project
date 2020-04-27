@@ -3,7 +3,7 @@
  * pro.c
  *
  *  Created on: 16 May 2014
- *      Author: inetlab
+ *  Author: Shiva Reddy, Dhruv Shetty
  */
 
 #include<stdio.h>
@@ -90,11 +90,11 @@ if(day==1)
 {
 //sky
 glColor3f(0.0,0.9,0.9);
-glBegin(GL_POLYGON);
-glVertex2f(0,380);
-glVertex2f(0,700);
-glVertex2f(1100,700);
-glVertex2f(1100,380);
+glBegin(GL_POLYGON);	// Inputs in Anti-Clockwise direction
+glVertex2f(0,100);	// Bottom Left Point
+glVertex2f(0,1500);	// Top Left
+glVertex2f(1100,100);	// Bottom Right
+glVertex2f(1100,1500);	// Top Right
 glEnd();
 
 //sun
@@ -138,7 +138,7 @@ if(plane==1)
 	for(l=0;l<=20;l++)
 	{
 		glColor3f(1.0,1.0,1.0);
-		draw_circle(160+m,625,l);
+		draw_circle(260+m,625,l);
 
 	}
 
@@ -146,14 +146,14 @@ if(plane==1)
 	for(l=0;l<=35;l++)
 	{
 		glColor3f(1.0,1.0,1.0);
-		draw_circle(200+m,625,l);
-		draw_circle(225+m,625,l);
+		draw_circle(300+m,625,l);
+		draw_circle(325+m,625,l);
 	}
 
 	for(l=0;l<=20;l++)
 	{
 		glColor3f(1.0,1.0,1.0);
-		draw_circle(265+m,625,l);
+		draw_circle(365+m,625,l);
 	}
 
 //cloud2
@@ -162,8 +162,8 @@ if(plane==1)
 	for(l=0;l<=20;l++)
 	{
 		glColor3f(1.0,1.0,1.0);
-		draw_circle(370+m,615,l);
-}
+		draw_circle(570+m,615,l);
+	}
 
 
 
@@ -172,16 +172,16 @@ if(plane==1)
 	{
 
 		glColor3f(1.0,1.0,1.0);
-		draw_circle(410+m,615,l);
-		draw_circle(435+m,615,l);
-		draw_circle(470+m,615,l);
+		draw_circle(610+m,615,l);
+		draw_circle(635+m,615,l);
+		draw_circle(670+m,615,l);
 	}
 
-for(l=0;l<=20;l++)
+	for(l=0;l<=20;l++)
 	{
 		glColor3f(1.0,1.0,1.0);
-		draw_circle(500+m,615,l);
-}
+		draw_circle(700+m,615,l);
+	}
 }
 
 
@@ -190,11 +190,11 @@ else
 
 //sky
 glColor3f(0.0,0.0,0.0);
-glBegin(GL_POLYGON);
-glVertex2f(0,380);
-glVertex2f(0,700);
-glVertex2f(1100,700);
-glVertex2f(1100,380);
+glBegin(GL_POLYGON);	// Inputs in Anti-Clockwise direction
+glVertex2f(0,100);	// Bottom Left Point
+glVertex2f(0,1500);	// Top Left
+glVertex2f(1100,100);	// Bottom Right
+glVertex2f(1100,1500);	// Top Right
 glEnd();
 
 //moon
@@ -824,8 +824,8 @@ int main(int argc, char* argv[])
 {
 	int c_menu;	
 	int key=0;
-	printf("project by\n\t namratha and sweekruthi \n");
-	printf("press 1 to start\npress 0 to quit\n");
+	printf("Project by Shiva Reddy and Dhruv Shetty\n");
+	printf("Press 1 to Start\nPress 0 to Quit\n");
 	scanf("%d",&key);
 	if(key==0) return 0;
 	glutInit(&argc, argv);
