@@ -1,9 +1,12 @@
-
-/*
- * pro.c
+/*  ship.c
  *
- *  Created on: 16 May 2014
- *      Author: inetlab
+ *  Created on: 16th April 2020
+ *  Author: Dhruv Shetty, Shiva Reddy
+ *
+ *  Description: 
+ *  1st Frame: Ship crosses view frame
+ *  2nd Frame: Ship comes in contact with Iceberg
+ *  3rd Frame: Ship starts sinking
  */
 
 #include<stdio.h>
@@ -13,7 +16,7 @@
 #include<GL/gl.h>
 
 
- struct timespec tim, tim2;
+struct timespec tim, tim2;
 
 void ice();
 void display1();
@@ -83,281 +86,273 @@ void draw_circle(GLint h, GLint k, GLint r)
 
 
 
-void draw_object()
-{
-int l;
-if(day==1)
-{
-//sky
-glColor3f(0.0,0.9,0.9);
-glBegin(GL_POLYGON);
-glVertex2f(0,380);
-glVertex2f(0,700);
-glVertex2f(1100,700);
-glVertex2f(1100,380);
-glEnd();
+void draw_object(){
+	
+	int l;
+	if(day==1) {
+		//sky
+		glColor3f(0.0, 1.0, 1.0);
+		glBegin(GL_POLYGON);	// Inputs in Anti-Clockwise direction
+		glVertex2f(0,100);	// Bottom Left Point
+		glVertex2f(0,1500);	// Top Left
+		glVertex2f(1100,100);	// Bottom Right
+		glVertex2f(1100,1500);	// Top Right
+		glEnd();
 
-//sun
-
-
-	for(l=0;l<=35;l++)
-{
-		glColor3f(1.0,0.9,0.0);
-		draw_circle(100,625,l);
-}
+		//sun
+		for(l=0;l<=35;l++)
+		{
+				glColor3f(1.0,0.9,0.0);
+				draw_circle(100,625,l);
+		}
 
 
-//plane
-if(plane==1)
-{
-	glColor3f(1.0,1.0,1.0);
-	glBegin(GL_POLYGON);
-	glVertex2f(925+n,625+o);
-	glVertex2f(950+n,640+o);
-	glVertex2f(1015+n,640+o);
-	glVertex2f(1030+n,650+o);
-	glVertex2f(1050+n,650+o);
-	glVertex2f(1010+n,625+o);
-	glEnd();
+		//plane
+		if(plane==1)
+		{
+			glColor3f(1.0,1.0,1.0);
+			glBegin(GL_POLYGON);
+			glVertex2f(925+n,625+o);
+			glVertex2f(950+n,640+o);
+			glVertex2f(1015+n,640+o);
+			glVertex2f(1030+n,650+o);
+			glVertex2f(1050+n,650+o);
+			glVertex2f(1010+n,625+o);
+			glEnd();
 
-	glColor3f(0.8,0.8,0.8);
-	glBegin(GL_LINE_LOOP);
-	glVertex2f(925+n,625+o);
-	glVertex2f(950+n,640+o);
-	glVertex2f(1015+n,640+o);
-	glVertex2f(1030+n,650+o);
-	glVertex2f(1050+n,650+o);
-	glVertex2f(1010+n,625+o);
-	glEnd();
+			glColor3f(0.8,0.8,0.8);
+			glBegin(GL_LINE_LOOP);
+			glVertex2f(925+n,625+o);
+			glVertex2f(950+n,640+o);
+			glVertex2f(1015+n,640+o);
+			glVertex2f(1030+n,650+o);
+			glVertex2f(1050+n,650+o);
+			glVertex2f(1010+n,625+o);
+			glEnd();
 
-}
+		}
 
-//cloud1
+		//cloud1
 
 
-	for(l=0;l<=20;l++)
-	{
-		glColor3f(1.0,1.0,1.0);
-		draw_circle(160+m,625,l);
+			for(l=0;l<=20;l++)
+			{
+				glColor3f(1.0,1.0,1.0);
+				draw_circle(260+m,625,l);
 
+			}
+
+
+			for(l=0;l<=35;l++)
+			{
+				glColor3f(1.0,1.0,1.0);
+				draw_circle(300+m,625,l);
+				draw_circle(325+m,625,l);
+			}
+
+			for(l=0;l<=20;l++)
+			{
+				glColor3f(1.0,1.0,1.0);
+				draw_circle(365+m,625,l);
+			}
+
+		//cloud2
+
+
+			for(l=0;l<=20;l++)
+			{
+				glColor3f(1.0,1.0,1.0);
+				draw_circle(570+m,615,l);
+			}
+
+
+
+
+			for(l=0;l<=35;l++)
+			{
+
+				glColor3f(1.0,1.0,1.0);
+				draw_circle(610+m,615,l);
+				draw_circle(635+m,615,l);
+				draw_circle(670+m,615,l);
+			}
+
+			for(l=0;l<=20;l++)
+			{
+				glColor3f(1.0,1.0,1.0);
+				draw_circle(700+m,615,l);
+			}
 	}
 
 
-	for(l=0;l<=35;l++)
-	{
+	else {
+
+		//sky
+		glColor3f(0.0,0.0,0.0);
+		glBegin(GL_POLYGON);	// Inputs in Anti-Clockwise direction
+		glVertex2f(0,100);	// Bottom Left Point
+		glVertex2f(0,1500);	// Top Left
+		glVertex2f(1100,100);	// Bottom Right
+		glVertex2f(1100,1500);	// Top Right
+		glEnd();
+
+		//moon
+		int l;
+
+			for(l=0;l<=35;l++)
+			{
+				glColor3f(1.0,1.0,1.0);
+				draw_circle(100,625,l);
+			}
+
+		//star1
+
 		glColor3f(1.0,1.0,1.0);
-		draw_circle(200+m,625,l);
-		draw_circle(225+m,625,l);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(575,653);
+		glVertex2f(570,645);
+		glVertex2f(580,645);
+		glVertex2f(575,642);
+		glVertex2f(570,650);
+		glVertex2f(580,650);
+		glEnd();
+
+		//star2
+		glColor3f(1.0,1.0,1.0);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(975,643);
+		glVertex2f(970,635);
+		glVertex2f(980,635);
+		glVertex2f(975,632);
+		glVertex2f(970,640);
+		glVertex2f(980,640);
+		glEnd();
+
+		//star3
+		glColor3f(1.0,1.0,1.0);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(875,543);
+		glVertex2f(870,535);
+		glVertex2f(880,535);
+		glVertex2f(875,532);
+		glVertex2f(870,540);
+		glVertex2f(880,540);
+		glEnd();
+
+		//star4
+		glColor3f(1.0,1.0,1.0);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(375,598);
+		glVertex2f(370,590);
+		glVertex2f(380,590);
+		glVertex2f(375,587);
+		glVertex2f(370,595);
+		glVertex2f(380,595);
+		glEnd();
+
+		//star5
+		glColor3f(1.0,1.0,1.0);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(750,628);
+		glVertex2f(745,620);
+		glVertex2f(755,620);
+		glVertex2f(750,618);
+		glVertex2f(745,625);
+		glVertex2f(755,625);
+		glEnd();
+
+		//star6
+		glColor3f(1.0,1.0,1.0);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(200,628);
+		glVertex2f(195,620);
+		glVertex2f(205,620);
+		glVertex2f(200,618);
+		glVertex2f(195,625);
+		glVertex2f(205,625);
+		glEnd();
+
+		//star7
+		glColor3f(1.0,1.0,1.0);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(100,528);
+		glVertex2f(95,520);
+		glVertex2f(105,520);
+		glVertex2f(100,518);
+		glVertex2f(95,525);
+		glVertex2f(105,525);
+		glEnd();
+
+		//star8
+		glColor3f(1.0,1.0,1.0);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(300,468);
+		glVertex2f(295,460);
+		glVertex2f(305,460);
+		glVertex2f(300,458);
+		glVertex2f(295,465);
+		glVertex2f(305,465);
+		glEnd();
+
+		//star9
+		glColor3f(1.0,1.0,1.0);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(500,543);
+		glVertex2f(495,535);
+		glVertex2f(505,535);
+		glVertex2f(500,532);
+		glVertex2f(495,540);
+		glVertex2f(505,540);
+		glEnd();
+
+
+		//comet
+		if(comet==1)
+		{
+			for(l=0;l<=7;l++)
+			{
+				glColor3f(1.0,1.0,1.0);
+				draw_circle(300+q,675,l);
+			}
+
+		glColor3f(1.0,1.0,1.0);
+			glBegin(GL_TRIANGLES);
+			glVertex2f(200+q,675);
+			glVertex2f(300+q,682);
+			glVertex2f(300+q,668);
+			glEnd();
+		}
+
+		//Plane
+		if(plane==1)
+		{
+
+			for(l=0;l<=1;l++)
+			{
+				glColor3f(1.0,0.0,0.0);
+				draw_circle(950+n,625+o,l);
+				glColor3f(1.0,1.0,0.0);
+				draw_circle(954+n,623+o,l);
+
+			}
+		}
 	}
-
-	for(l=0;l<=20;l++)
-	{
-		glColor3f(1.0,1.0,1.0);
-		draw_circle(265+m,625,l);
-	}
-
-//cloud2
-
-
-	for(l=0;l<=20;l++)
-	{
-		glColor3f(1.0,1.0,1.0);
-		draw_circle(370+m,615,l);
-}
-
-
-
-
-	for(l=0;l<=35;l++)
-	{
-
-		glColor3f(1.0,1.0,1.0);
-		draw_circle(410+m,615,l);
-		draw_circle(435+m,615,l);
-		draw_circle(470+m,615,l);
-	}
-
-for(l=0;l<=20;l++)
-	{
-		glColor3f(1.0,1.0,1.0);
-		draw_circle(500+m,615,l);
-}
-}
-
-
-else
-{
-
-//sky
-glColor3f(0.0,0.0,0.0);
-glBegin(GL_POLYGON);
-glVertex2f(0,380);
-glVertex2f(0,700);
-glVertex2f(1100,700);
-glVertex2f(1100,380);
-glEnd();
-
-//moon
-int l;
-
-	for(l=0;l<=35;l++)
-	{
-		glColor3f(1.0,1.0,1.0);
-		draw_circle(100,625,l);
-	}
-
-//star1
-
-glColor3f(1.0,1.0,1.0);
-glBegin(GL_TRIANGLES);
-glVertex2f(575,653);
-glVertex2f(570,645);
-glVertex2f(580,645);
-glVertex2f(575,642);
-glVertex2f(570,650);
-glVertex2f(580,650);
-glEnd();
-
-//star2
-glColor3f(1.0,1.0,1.0);
-glBegin(GL_TRIANGLES);
-glVertex2f(975,643);
-glVertex2f(970,635);
-glVertex2f(980,635);
-glVertex2f(975,632);
-glVertex2f(970,640);
-glVertex2f(980,640);
-glEnd();
-
-//star3
-glColor3f(1.0,1.0,1.0);
-glBegin(GL_TRIANGLES);
-glVertex2f(875,543);
-glVertex2f(870,535);
-glVertex2f(880,535);
-glVertex2f(875,532);
-glVertex2f(870,540);
-glVertex2f(880,540);
-glEnd();
-
-//star4
-glColor3f(1.0,1.0,1.0);
-glBegin(GL_TRIANGLES);
-glVertex2f(375,598);
-glVertex2f(370,590);
-glVertex2f(380,590);
-glVertex2f(375,587);
-glVertex2f(370,595);
-glVertex2f(380,595);
-glEnd();
-
-//star5
-glColor3f(1.0,1.0,1.0);
-glBegin(GL_TRIANGLES);
-glVertex2f(750,628);
-glVertex2f(745,620);
-glVertex2f(755,620);
-glVertex2f(750,618);
-glVertex2f(745,625);
-glVertex2f(755,625);
-glEnd();
-
-//star6
-glColor3f(1.0,1.0,1.0);
-glBegin(GL_TRIANGLES);
-glVertex2f(200,628);
-glVertex2f(195,620);
-glVertex2f(205,620);
-glVertex2f(200,618);
-glVertex2f(195,625);
-glVertex2f(205,625);
-glEnd();
-
-//star7
-glColor3f(1.0,1.0,1.0);
-glBegin(GL_TRIANGLES);
-glVertex2f(100,528);
-glVertex2f(95,520);
-glVertex2f(105,520);
-glVertex2f(100,518);
-glVertex2f(95,525);
-glVertex2f(105,525);
-glEnd();
-
-//star8
-glColor3f(1.0,1.0,1.0);
-glBegin(GL_TRIANGLES);
-glVertex2f(300,468);
-glVertex2f(295,460);
-glVertex2f(305,460);
-glVertex2f(300,458);
-glVertex2f(295,465);
-glVertex2f(305,465);
-glEnd();
-
-//star9
-glColor3f(1.0,1.0,1.0);
-glBegin(GL_TRIANGLES);
-glVertex2f(500,543);
-glVertex2f(495,535);
-glVertex2f(505,535);
-glVertex2f(500,532);
-glVertex2f(495,540);
-glVertex2f(505,540);
-glEnd();
-
-
-//comet
-if(comet==1)
-{
-	for(l=0;l<=7;l++)
-	{
-		glColor3f(1.0,1.0,1.0);
-		draw_circle(300+q,675,l);
-	}
-
-glColor3f(1.0,1.0,1.0);
-	glBegin(GL_TRIANGLES);
-	glVertex2f(200+q,675);
-	glVertex2f(300+q,682);
-	glVertex2f(300+q,668);
-	glEnd();
-}
-
-//Plane
-if(plane==1)
-{
-
-	for(l=0;l<=1;l++)
-	{
-		glColor3f(1.0,0.0,0.0);
-		draw_circle(950+n,625+o,l);
-		glColor3f(1.0,1.0,0.0);
-		draw_circle(954+n,623+o,l);
-
-	}
-
-
-
-}
-}
 }
 
 void keyboardFunc( unsigned char key, int x, int y )
 {
-switch( key )
-    {
-case 'd':
-	case 'D':
-		day=1;
-		break;
+	switch( key )
+	    {
+	case 'd':
+		case 'D':
+			day=1;
+			break;
 
-	case 'n':
-case 'N':
-		day=0;
-		break;
-    };
-
+		case 'n':
+	case 'N':
+			day=0;
+			break;
+	    };
 }
 
 
@@ -385,35 +380,37 @@ void main_menu(int index)
 	}
 }
 
-
+// Displaying 3 cases
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 	draw_object();	
 	display1();
-
+	
+	// Ship and Ice in Frame
 	if(a>950)
 
 	{
 		b+=20;
-		display2();
 		draw_object();
+		display2();
 	}
+	// Time delay after ship hits ice
 	if(b==180)
 	{
 		tim.tv_sec = 2;
-				   tim.tv_nsec = 500000000L;
-				   nanosleep(&tim , &tim2);
+		tim.tv_nsec = 500000000L;
+		nanosleep(&tim , &tim2);
 	}
+	// Ship in contact with ice
 	if(b>250)
 	{
 
 		c+=10;
-		display3();
 		draw_object();
+		display3();
 
 	}
-
 	glFlush();
 	glutSwapBuffers();
 }
@@ -429,9 +426,8 @@ void display1()
 }
 
 void display2()
-{
-
-	glClear(GL_COLOR_BUFFER_BIT);
+{	
+	// glCLear() is not added since we want the previous fram to continue (background)
 	ice();
 	glPushMatrix();
 	glTranslated(b,75,0.0);
@@ -443,7 +439,6 @@ void display2()
 
 void display3()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
 	x-=1;
 	ice();
 	glPushMatrix();
@@ -460,7 +455,7 @@ void display3()
 void water()
 {
 
-	glColor3f(0.0,0.0,1.0);
+	glColor3f(0.0, 0.0, 0.5);
 	glBegin(GL_POLYGON);
 		glVertex2f(0,0);
 		glVertex2f(1000,0);
@@ -753,11 +748,11 @@ void ice()
 	glPushMatrix();
 	glTranslated(450,50,0.0);
 	glScaled(10,10,0);
-	glColor3f(0.0,1.0,1.0);
+	glColor3f(0.8, 0.8, 0.8);	// lightgrey color code
 	if(c>0)
 	{glPushMatrix();
 	glTranslated(0,x,0);
-glPushMatrix();
+	glPushMatrix();
 	glTranslated(7,2,0.0);
 			glRotated(-x,0,0,1);
 			glTranslated(-7,-2,0.0);
@@ -824,15 +819,17 @@ int main(int argc, char* argv[])
 {
 	int c_menu;	
 	int key=0;
-	printf("project by\n\t namratha and sweekruthi \n");
-	printf("press 1 to start\npress 0 to quit\n");
+	printf("Project by Shiva Reddy and Dhruv Shetty\n");
+	printf("Press 1 to Start\nPress 0 to Quit\n");
+ 	printf("Press 'd' or 'D' to make it day. \n");
+	printf("Press 'n' or 'N' to make it night. \n");
 	scanf("%d",&key);
 	if(key==0) return 0;
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
 	glutInitWindowSize(1024.0,768.0);
 	glutInitWindowPosition(0,0);
-	glutCreateWindow("titanic ship");
+	glutCreateWindow("Shipping!");
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboardFunc);
 	myinit();
