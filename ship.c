@@ -25,7 +25,7 @@ void display3();
 void ship();
 void water();
 
-int day=1,plane=0,comet=0;
+int light=0,day=1,plane=0,comet=0;
 
 GLint a=0,b=0,c=0,d=0,e=0,f=0,g=500,h=600,x=0,i=0;
 GLfloat theta=0.0;
@@ -128,7 +128,7 @@ void draw_object(){
 			glVertex2f(1030+n,650+o);
 			glVertex2f(1050+n,650+o);
 			glVertex2f(1010+n,625+o);
-			glEnd();
+			glEnd();	
 
 		}
 
@@ -323,19 +323,6 @@ void draw_object(){
 			glEnd();
 		}
 
-		//Plane
-		if(plane==1)
-		{
-
-			for(l=0;l<=1;l++)
-			{
-				glColor3f(1.0,0.0,0.0);
-				draw_circle(950+n,625+o,l);
-				glColor3f(1.0,1.0,0.0);
-				draw_circle(954+n,623+o,l);
-
-			}
-		}
 	}
 }
 
@@ -380,6 +367,17 @@ void main_menu(int index)
 	}
 }
 
+//changes
+void idle()
+{
+glClearColor(1.0,1.0,1.0,1.0);
+	n-=2;
+	 o+=0.2;
+	c+=2;
+glutPostRedisplay();
+
+}
+
 // Displaying 3 cases
 void display()
 {
@@ -394,13 +392,14 @@ void display()
 		b+=20;
 		draw_object();
 		display2();
+		
 	}
 	// Time delay after ship hits ice
 	if(b==180)
 	{
 		tim.tv_sec = 2;
 		tim.tv_nsec = 500000000L;
-		nanosleep(&tim , &tim2);
+		nanosleep(&tim , &tim2);	
 	}
 	// Ship in contact with ice
 	if(b>250)
@@ -409,7 +408,6 @@ void display()
 		c+=10;
 		draw_object();
 		display3();
-
 	}
 	glFlush();
 	glutSwapBuffers();
@@ -434,17 +432,16 @@ void display2()
 	ship();
 	glPopMatrix();
 	water();
-
 }
 
 void display3()
 {
 	x-=1;
 	ice();
-	glPushMatrix();
+	glPushMatrix();	
 	glTranslated(c,100+x*5,0.0);
 	glRotated(-15,0,0,1);
-	ship();
+	ship();	
 	glPopMatrix();
 	water();
 
@@ -477,7 +474,7 @@ void ship()
 		glVertex2f(19.5,8.5);
 		glVertex2f(19.5,5.5);
 	glEnd();
-	glColor3f(0.0,0.0,0.0);
+	glColor3f(0.1,0.1,0.0);
 	glBegin(GL_POLYGON);
 		glVertex2f(1,5.5);
 		glVertex2f(4,1);
@@ -517,7 +514,7 @@ void ship()
 		glVertex2f(18.5,10);
 		glVertex2f(18.5,8.5);
 	glEnd();
-	glColor3f(0.0,0.0,0.0);
+	glColor3f(0.1,0.1,0.0);
 	glBegin(GL_POLYGON);
 		glVertex2f(5.5,10);
 		glVertex2f(5.5,12.9);
@@ -531,7 +528,7 @@ void ship()
 		glVertex2f(7,13.5);
 		glVertex2f(7,12.9);
 	glEnd();
-	glColor3f(0.0,0.0,0.0);
+	glColor3f(0.1,0.1,0.0);
 	glBegin(GL_POLYGON);
 		glVertex2f(8.5,10);
 		glVertex2f(8.5,12.9);
@@ -545,7 +542,7 @@ void ship()
 		glVertex2f(10,13.5);
 		glVertex2f(10,12.9);
 	glEnd();
-	glColor3f(0.0,0.0,0.0);
+	glColor3f(0.1,0.1,0.0);
 	glBegin(GL_POLYGON);
 		glVertex2f(11.5,10);
 		glVertex2f(11.5,12.9);
@@ -559,7 +556,7 @@ void ship()
 		glVertex2f(13,13.5);
 		glVertex2f(13,12.9);
 	glEnd();
-	glColor3f(0.0,0.0,0.0);
+	glColor3f(0.1,0.1,0.0);
 	glBegin(GL_POLYGON);
 		glVertex2f(14.5,10);
 		glVertex2f(14.5,12.9);
@@ -573,7 +570,7 @@ void ship()
 		glVertex2f(16,13.5);
 		glVertex2f(16,12.9);
 	glEnd();
-	glColor3f(0.0,0.0,0.0);
+	glColor3f(0.1,0.1,0.0);
 	glBegin(GL_LINE_LOOP);
 		glVertex2f(1.5,5.5);
 		glVertex2f(1.5,6.5);
@@ -820,7 +817,7 @@ int main(int argc, char* argv[])
 	int c_menu;	
 	int key=0;
 	printf("Project by Shiva Reddy and Dhruv Shetty\n");
-	printf("Press 1 to Start\nPress 0 to Quit\n");
+	printf("Press 1 to Start\n");
  	printf("Press 'd' or 'D' to make it day. \n");
 	printf("Press 'n' or 'N' to make it night. \n");
 	scanf("%d",&key);
@@ -831,6 +828,8 @@ int main(int argc, char* argv[])
 	glutInitWindowPosition(0,0);
 	glutCreateWindow("Shipping!");
 	glutDisplayFunc(display);
+	//changes	
+	glutIdleFunc(idle);
 	glutKeyboardFunc(keyboardFunc);
 	myinit();
 	c_menu=glutCreateMenu(main_menu);
