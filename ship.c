@@ -25,7 +25,7 @@ void display3();
 void ship();
 void water();
 
-int light=0,day=1,plane=0,comet=0;
+int day=1,plane=0,comet=0;
 
 GLint a=0,b=0,c=0,d=0,e=0,f=0,g=500,h=600,x=0,i=0;
 GLfloat theta=0.0;
@@ -34,6 +34,11 @@ float p=0.0,n=0.0,m=0.0,o=0.0,q=0.0;
 void update(int value)
 {
 	a+=20.0;
+	//changes
+	n-=20;
+	o+=2.5;
+	q+=20;
+	//
 	glutPostRedisplay();
 	glutTimerFunc(200,update,0);
 }
@@ -108,30 +113,27 @@ void draw_object(){
 
 
 		//plane
-		if(plane==1)
-		{
-			glColor3f(1.0,1.0,1.0);
-			glBegin(GL_POLYGON);
-			glVertex2f(925+n,625+o);
-			glVertex2f(950+n,640+o);
-			glVertex2f(1015+n,640+o);
-			glVertex2f(1030+n,650+o);
-			glVertex2f(1050+n,650+o);
-			glVertex2f(1010+n,625+o);
-			glEnd();
+		if(plane==1){
+				glColor3f(1.0,0.0,0.0);
+				glBegin(GL_POLYGON);
+				glVertex2f(925+n,625+o);
+				glVertex2f(950+n,640+o);
+				glVertex2f(1015+n,640+o);
+				glVertex2f(1030+n,650+o);
+				glVertex2f(1050+n,650+o);
+				glVertex2f(1010+n,625+o);
+				glEnd();
 
-			glColor3f(0.8,0.8,0.8);
-			glBegin(GL_LINE_LOOP);
-			glVertex2f(925+n,625+o);
-			glVertex2f(950+n,640+o);
-			glVertex2f(1015+n,640+o);
-			glVertex2f(1030+n,650+o);
-			glVertex2f(1050+n,650+o);
-			glVertex2f(1010+n,625+o);
-			glEnd();	
-
+				glColor3f(0.8,0.8,0.8);
+				glBegin(GL_LINE_LOOP);
+				glVertex2f(925+n,625+o);
+				glVertex2f(950+n,640+o);
+				glVertex2f(1015+n,640+o);
+				glVertex2f(1030+n,650+o);
+				glVertex2f(1050+n,650+o);
+				glVertex2f(1010+n,625+o);
+				glEnd();	
 		}
-
 		//cloud1
 
 
@@ -307,22 +309,21 @@ void draw_object(){
 
 
 		//comet
-		if(comet==1)
-		{
+		if(comet==1){
 			for(l=0;l<=7;l++)
 			{
 				glColor3f(1.0,1.0,1.0);
 				draw_circle(300+q,675,l);
 			}
 
-		glColor3f(1.0,1.0,1.0);
+			glColor3f(1.0,1.0,1.0);
 			glBegin(GL_TRIANGLES);
 			glVertex2f(200+q,675);
 			glVertex2f(300+q,682);
 			glVertex2f(300+q,668);
 			glEnd();
-		}
 
+		}
 	}
 }
 
@@ -342,9 +343,6 @@ void keyboardFunc( unsigned char key, int x, int y )
 	    };
 }
 
-
-
-
 void main_menu(int index)
 {
 	switch(index)
@@ -352,8 +350,8 @@ void main_menu(int index)
 	case 1:
 	if(index==1)
 	 {
-	plane=1;
-		 o=n=0.0;
+		plane=1;
+		o=n=0.0;
 	 }
 	break;
 
@@ -361,22 +359,14 @@ void main_menu(int index)
 	if(index==2)
 	 {
 		comet=1;
-		 c=0.0;
+		 q=0.0;
 	 }
 	break;
 	}
 }
 
-//changes
-void idle()
-{
-glClearColor(1.0,1.0,1.0,1.0);
-	n-=2;
-	 o+=0.2;
-	c+=2;
-glutPostRedisplay();
 
-}
+
 
 // Displaying 3 cases
 void display()
@@ -813,8 +803,8 @@ void myinit()
 
 int main(int argc, char* argv[])
 
-{
-	int c_menu;	
+{	
+	int c_menu;
 	int key=0;
 	printf("Project by Shiva Reddy and Dhruv Shetty\n");
 	printf("Press 1 to Start\n");
@@ -828,8 +818,6 @@ int main(int argc, char* argv[])
 	glutInitWindowPosition(0,0);
 	glutCreateWindow("Shipping!");
 	glutDisplayFunc(display);
-	//changes	
-	glutIdleFunc(idle);
 	glutKeyboardFunc(keyboardFunc);
 	myinit();
 	c_menu=glutCreateMenu(main_menu);
