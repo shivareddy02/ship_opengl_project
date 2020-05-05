@@ -33,25 +33,20 @@ float p=0.0,n=0.0,m=0.0,o=0.0,q=0.0;
 
 void update(int value)
 {
+	// a used for ship movement
 	a+=20.0;
-	//changes
+	// n,o used for plane movement
 	n-=20;
 	o+=2.5;
+	// q used for comet movement
 	q+=20;
-	//
+	// m used for cloud movement
+	m+=1;
 	glutPostRedisplay();
-	glutTimerFunc(200,update,0);
+	glutTimerFunc(200,update,0);	// 200ms gap between further movements
 }
 
-
-char ch;
-
-void declare(char *string)
-{
-     while(*string)
-        glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, *string++);
-}
-
+// Turning on an individual pixel
 void draw_pixel(GLint cx, GLint cy)
 {
 
@@ -60,6 +55,7 @@ void draw_pixel(GLint cx, GLint cy)
 	glEnd();
 }
 
+// Drawing a circle using 8 way symmetry
 void plotpixels(GLint h,GLint k, GLint x,GLint y)
 {
 	draw_pixel(x+h,y+k);
@@ -72,8 +68,10 @@ void plotpixels(GLint h,GLint k, GLint x,GLint y)
 	draw_pixel(-y+h,-x+k);
 }
 
+// h-> x coordinate, k-> y coordinate, r-> radius of circle
 void draw_circle(GLint h, GLint k, GLint r)
 {
+	// r changes to create a solid circle
 	GLint d=1-r, x=0, y=r;
 	while(y>x)
 	{
@@ -95,7 +93,7 @@ void draw_object(){
 	
 	int l;
 	if(day==1) {
-		//sky
+		// Day Sky
 		glColor3f(0.0, 1.0, 1.0);
 		glBegin(GL_POLYGON);	// Inputs in Anti-Clockwise direction
 		glVertex2f(0,100);	// Bottom Left Point
@@ -104,7 +102,7 @@ void draw_object(){
 		glVertex2f(1100,1500);	// Top Right
 		glEnd();
 
-		//sun
+		// Sun
 		for(l=0;l<=35;l++)
 		{
 				glColor3f(1.0,0.9,0.0);
@@ -112,8 +110,9 @@ void draw_object(){
 		}
 
 
-		//plane
+		// Plane
 		if(plane==1){
+				// Body of the plane
 				glColor3f(1.0,0.0,0.0);
 				glBegin(GL_POLYGON);
 				glVertex2f(925+n,625+o);
@@ -123,7 +122,8 @@ void draw_object(){
 				glVertex2f(1050+n,650+o);
 				glVertex2f(1010+n,625+o);
 				glEnd();
-
+				
+				// Wings of the plane
 				glColor3f(0.8,0.8,0.8);
 				glBegin(GL_LINE_LOOP);
 				glVertex2f(925+n,625+o);
@@ -134,62 +134,52 @@ void draw_object(){
 				glVertex2f(1010+n,625+o);
 				glEnd();	
 		}
-		//cloud1
+		// Cloud 1
+		for(l=0;l<=20;l++)
+		{
+			glColor3f(1.0,1.0,1.0);
+			draw_circle(260+m,625,l);
 
+		}
 
-			for(l=0;l<=20;l++)
-			{
-				glColor3f(1.0,1.0,1.0);
-				draw_circle(260+m,625,l);
+		for(l=0;l<=35;l++)
+		{
+			glColor3f(1.0,1.0,1.0);
+			draw_circle(300+m,625,l);
+			draw_circle(325+m,625,l);
+		}
 
-			}
+		for(l=0;l<=20;l++)
+		{
+			glColor3f(1.0,1.0,1.0);
+			draw_circle(365+m,625,l);
+		}
 
+		// Cloud 2
+		for(l=0;l<=20;l++)
+		{
+			glColor3f(1.0,1.0,1.0);
+			draw_circle(570+m,615,l);
+		}
+		
+		for(l=0;l<=35;l++)
+		{
+			glColor3f(1.0,1.0,1.0);
+			draw_circle(610+m,615,l);
+			draw_circle(635+m,615,l);
+			draw_circle(670+m,615,l);
+		}
 
-			for(l=0;l<=35;l++)
-			{
-				glColor3f(1.0,1.0,1.0);
-				draw_circle(300+m,625,l);
-				draw_circle(325+m,625,l);
-			}
-
-			for(l=0;l<=20;l++)
-			{
-				glColor3f(1.0,1.0,1.0);
-				draw_circle(365+m,625,l);
-			}
-
-		//cloud2
-
-
-			for(l=0;l<=20;l++)
-			{
-				glColor3f(1.0,1.0,1.0);
-				draw_circle(570+m,615,l);
-			}
-
-
-
-
-			for(l=0;l<=35;l++)
-			{
-
-				glColor3f(1.0,1.0,1.0);
-				draw_circle(610+m,615,l);
-				draw_circle(635+m,615,l);
-				draw_circle(670+m,615,l);
-			}
-
-			for(l=0;l<=20;l++)
-			{
-				glColor3f(1.0,1.0,1.0);
-				draw_circle(700+m,615,l);
-			}
+		for(l=0;l<=20;l++)
+		{
+			glColor3f(1.0,1.0,1.0);
+			draw_circle(700+m,615,l);
+		}
 	}
 
 
 	else {
-
-		//sky
+		// Night Sky
 		glColor3f(0.0,0.0,0.0);
 		glBegin(GL_POLYGON);	// Inputs in Anti-Clockwise direction
 		glVertex2f(0,100);	// Bottom Left Point
@@ -198,17 +188,15 @@ void draw_object(){
 		glVertex2f(1100,1500);	// Top Right
 		glEnd();
 
-		//moon
+		// Moon
 		int l;
+		for(l=0;l<=35;l++)
+		{
+			glColor3f(1.0,1.0,1.0);
+			draw_circle(100,625,l);
+		}
 
-			for(l=0;l<=35;l++)
-			{
-				glColor3f(1.0,1.0,1.0);
-				draw_circle(100,625,l);
-			}
-
-		//star1
-
+		// Star1
 		glColor3f(1.0,1.0,1.0);
 		glBegin(GL_TRIANGLES);
 		glVertex2f(575,653);
@@ -219,7 +207,7 @@ void draw_object(){
 		glVertex2f(580,650);
 		glEnd();
 
-		//star2
+		// Star2
 		glColor3f(1.0,1.0,1.0);
 		glBegin(GL_TRIANGLES);
 		glVertex2f(975,643);
@@ -230,7 +218,7 @@ void draw_object(){
 		glVertex2f(980,640);
 		glEnd();
 
-		//star3
+		// Star3
 		glColor3f(1.0,1.0,1.0);
 		glBegin(GL_TRIANGLES);
 		glVertex2f(875,543);
@@ -241,7 +229,7 @@ void draw_object(){
 		glVertex2f(880,540);
 		glEnd();
 
-		//star4
+		// Star4
 		glColor3f(1.0,1.0,1.0);
 		glBegin(GL_TRIANGLES);
 		glVertex2f(375,598);
@@ -252,7 +240,7 @@ void draw_object(){
 		glVertex2f(380,595);
 		glEnd();
 
-		//star5
+		// Star5
 		glColor3f(1.0,1.0,1.0);
 		glBegin(GL_TRIANGLES);
 		glVertex2f(750,628);
@@ -263,7 +251,7 @@ void draw_object(){
 		glVertex2f(755,625);
 		glEnd();
 
-		//star6
+		// Star6
 		glColor3f(1.0,1.0,1.0);
 		glBegin(GL_TRIANGLES);
 		glVertex2f(200,628);
@@ -274,7 +262,7 @@ void draw_object(){
 		glVertex2f(205,625);
 		glEnd();
 
-		//star7
+		// Star7
 		glColor3f(1.0,1.0,1.0);
 		glBegin(GL_TRIANGLES);
 		glVertex2f(100,528);
@@ -285,7 +273,7 @@ void draw_object(){
 		glVertex2f(105,525);
 		glEnd();
 
-		//star8
+		// Star8
 		glColor3f(1.0,1.0,1.0);
 		glBegin(GL_TRIANGLES);
 		glVertex2f(300,468);
@@ -296,7 +284,7 @@ void draw_object(){
 		glVertex2f(305,465);
 		glEnd();
 
-		//star9
+		// Star9
 		glColor3f(1.0,1.0,1.0);
 		glBegin(GL_TRIANGLES);
 		glVertex2f(500,543);
@@ -308,39 +296,39 @@ void draw_object(){
 		glEnd();
 
 
-		//comet
+		// Drawing a comet structure
 		if(comet==1){
 			for(l=0;l<=7;l++)
 			{
 				glColor3f(1.0,1.0,1.0);
 				draw_circle(300+q,675,l);
 			}
-
 			glColor3f(1.0,1.0,1.0);
 			glBegin(GL_TRIANGLES);
 			glVertex2f(200+q,675);
 			glVertex2f(300+q,682);
 			glVertex2f(300+q,668);
 			glEnd();
-
 		}
 	}
 }
 
+// Doc: https://www.opengl.org/resources/libraries/glut/spec3/node49.html
+// key-> ASCII value of character input, x&y-> Mouse position
 void keyboardFunc( unsigned char key, int x, int y )
 {
 	switch( key )
-	    {
-	case 'd':
+	{
+		case 'd':
 		case 'D':
 			day=1;
 			break;
 
 		case 'n':
-	case 'N':
+		case 'N':
 			day=0;
 			break;
-	    };
+	 };
 }
 
 void main_menu(int index)
@@ -377,7 +365,6 @@ void display()
 	
 	// Ship and Ice in Frame
 	if(a>950)
-
 	{
 		b+=20;
 		draw_object();
@@ -389,9 +376,11 @@ void display()
 	{
 		tim.tv_sec = 2;
 		tim.tv_nsec = 500000000L;
+		// int nanosleep(const struct timespec *req, struct timespec *rem)
+		// Doc: http://man7.org/linux/man-pages/man2/nanosleep.2.html
 		nanosleep(&tim , &tim2);	
 	}
-	// Ship in contact with ice
+	// Ship starts sinking
 	if(b>250)
 	{
 
@@ -400,12 +389,14 @@ void display()
 		display3();
 	}
 	glFlush();
-	glutSwapBuffers();
+	glutSwapBuffers();	// Indicating end of frame, swap for next frame
 }
 
 
 void display1()
 {
+	// glPushMatrix copies the top matrix and pushes it onto the stack
+	// glPopMatrix pops the top matrix off the stack
 	glPushMatrix();
 	glTranslated(a,75,0.0);
 	ship();
@@ -434,8 +425,6 @@ void display3()
 	ship();	
 	glPopMatrix();
 	water();
-
-
 }
 
 /* DRAW WATER */
@@ -454,8 +443,6 @@ void water()
 /* TO DRAW SHIP */
 void ship()
 {
-
-
 	glScaled(20,20,0);
 	glColor3f(0.5,0.5,0.5);
 	glBegin(GL_POLYGON);
@@ -789,20 +776,17 @@ void ice()
 
 }
 
-
-
 void myinit()
 {
 	glClearColor(1.0f,1.0f,1.0f,1.0f);
 	glColor3f(1.0,0.0,0.0);
 	glPointSize(1.0);
 	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluOrtho2D(0.0,999.0,0.0,799.0);
+	glLoadIdentity();			// Used to set back to default (origin)
+	gluOrtho2D(0.0,999.0,0.0,799.0);	// Sets up 2D Orthographic viewing region
 }
 
 int main(int argc, char* argv[])
-
 {	
 	int c_menu;
 	int key=0;
@@ -820,11 +804,11 @@ int main(int argc, char* argv[])
 	glutDisplayFunc(display);
 	glutKeyboardFunc(keyboardFunc);
 	myinit();
-	c_menu=glutCreateMenu(main_menu);
-	glutAddMenuEntry("Aeroplane",1);
-	glutAddMenuEntry("Comet",2);
-	glutAttachMenu(GLUT_RIGHT_BUTTON);
-	glutTimerFunc(100,update,0);
+	c_menu=glutCreateMenu(main_menu);	// Creating a Menu
+	glutAddMenuEntry("Aeroplane",1);	// Index=1 for Aeroplane
+	glutAddMenuEntry("Comet",2);		// Index=2 for Comet
+	glutAttachMenu(GLUT_RIGHT_BUTTON);	// Menu pops on clicking Mouse's right button
+	glutTimerFunc(100,update,0);		// Ship's initial movement after 100ms
 	glutMainLoop();
 	return 0;
 }
